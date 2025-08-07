@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/* Theme Classes */
+.theme-light {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-card: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --border-color: #e5e7eb;
+  --border-light: #f3f4f6;
+}
+
+.theme-dark {
+  --bg-primary: #111827;
+  --bg-secondary: #1f2937;
+  --bg-card: #374151;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --border-color: #4b5563;
+  --border-light: #374151;
+}
+
+/* Force immediate visual feedback for theme changes */
+html.light {
+  background-color: #ffffff;
+  color: #1f2937;
+}
+
+html.dark {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+/* Card utilities */
+.card-light {
+  background-color: #ffffff;
+  border-color: #e5e7eb;
+  color: #111827;
+}
+
+.card-dark {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f9fafb;
+}
+
+/* Text utilities */
+.text-primary-light {
+  color: #111827;
+}
+
+.text-primary-dark {
+  color: #f9fafb;
+}
+
+.text-secondary-light {
+  color: #6b7280;
+}
+
+.text-secondary-dark {
+  color: #d1d5db;
+}
+
+/* Input utilities */
+.input-light {
+  background-color: #ffffff;
+  border-color: #d1d5db;
+  color: #111827;
+}
+
+.input-dark {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f9fafb;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Ensure recharts compatibility */
+.recharts-wrapper {
+  color: inherit !important;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: currentColor !important;
+}
+
+.recharts-legend-wrapper {
+  color: inherit !important;
+}
