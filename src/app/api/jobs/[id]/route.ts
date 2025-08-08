@@ -14,9 +14,8 @@ const updateJobSchema = z.object({
   jobType: z.enum(['FULL_TIME', 'PART_TIME', 'INTERNSHIP', 'CONTRACT', 'FREELANCE']).optional(),
   workLocation: z.enum(['REMOTE', 'ONSITE', 'HYBRID']).optional(),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH']).optional(),
-  appliedDate: z.string().datetime().optional(),
-  deadline: z.string().datetime().optional(),
-  followUpReminder: z.string().datetime().optional(),
+  appliedDate: z.string().optional(),
+  deadline: z.string().optional(),
   description: z.string().optional(),
   requirements: z.string().optional(),
   notes: z.string().optional(),
@@ -35,9 +34,11 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const { id } = await params
+
     const jobApplication = await prisma.jobApplication.findFirst({
       where: {
-        id: params.id,
+        id: id,
         userId: session.user.id,
       },
       include: {
@@ -78,13 +79,14 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const { id } = await params
     const body = await request.json()
     const data = updateJobSchema.parse(body)
 
     // Check if job application exists and belongs to user
     const existingJob = await prisma.jobApplication.findFirst({
       where: {
-        id: params.id,
+        id: id,
         userId: session.user.id,
       },
     })
@@ -100,7 +102,7 @@ export async function PUT(
     const statusChanged = data.status && data.status !== existingJob.status
 
     const jobApplication = await prisma.jobApplication.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         ...data,
         appliedDate: data.appliedDate ? new Date(data.appliedDate) : undefined,
@@ -121,34 +123,11 @@ export async function PUT(
     if (statusChanged) {
       await prisma.applicationEvent.create({
         data: {
-          jobApplicationId: params.id,
+          jobApplicationId: id,
           title: `Status Changed to ${data.status}`,
           description: `Application status updated to ${data.status?.replace('_', ' ')}`,
           eventDate: new Date(),
           eventType: 'status_change',
-        },
-      })
-    }
-
-    // Handle follow-up reminder
-    if (data.followUpReminder) {
-      // Remove existing follow-up reminders for this application
-      await prisma.reminder.deleteMany({
-        where: {
-          jobApplicationId: params.id,
-          reminderType: 'follow_up',
-          isCompleted: false,
-        },
-      })
-
-      // Create new follow-up reminder
-      await prisma.reminder.create({
-        data: {
-          jobApplicationId: params.id,
-          title: `${jobApplication.position} application`,
-          description: null,
-          remindAt: new Date(data.followUpReminder),
-          reminderType: 'follow_up',
         },
       })
     }
@@ -180,10 +159,12 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const { id } = await params
+
     // Check if job application exists and belongs to user
     const existingJob = await prisma.jobApplication.findFirst({
       where: {
-        id: params.id,
+        id: id,
         userId: session.user.id,
       },
     })
@@ -196,7 +177,7 @@ export async function DELETE(
     }
 
     await prisma.jobApplication.delete({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     return NextResponse.json({ message: 'Job application deleted successfully' })

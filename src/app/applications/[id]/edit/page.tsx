@@ -67,6 +67,7 @@ export default function EditApplicationPage() {
   const [submitError, setSubmitError] = useState('')
   const [fetchError, setFetchError] = useState('')
   const [showFollowUpReminder, setShowFollowUpReminder] = useState(false)
+  const [formInitialized, setFormInitialized] = useState(false)
 
   const {
     register,
@@ -94,10 +95,10 @@ export default function EditApplicationPage() {
   }, [session, status, router])
 
   useEffect(() => {
-    if (session && applicationId) {
+    if (session && applicationId && !formInitialized) {
       fetchApplication()
     }
-  }, [session, applicationId])
+  }, [session, applicationId, formInitialized])
 
   const fetchApplication = async () => {
     try {
@@ -106,26 +107,29 @@ export default function EditApplicationPage() {
         const data = await response.json()
         setApplication(data)
         
-        // Populate form with existing data
-        reset({
-          company: data.company || '',
-          position: data.position || '',
-          location: data.location || '',
-          jobUrl: data.jobUrl || '',
-          salary: data.salary || '',
-          status: data.status || 'APPLIED',
-          jobType: data.jobType || '',
-          workLocation: data.workLocation || '',
-          priority: data.priority || 'MEDIUM',
-          appliedDate: data.appliedDate ? data.appliedDate.split('T')[0] : '',
-          deadline: data.deadline ? data.deadline.split('T')[0] : '',
-          description: data.description || '',
-          requirements: data.requirements || '',
-          notes: data.notes || '',
-          contactName: data.contactName || '',
-          contactEmail: data.contactEmail || '',
-          contactPhone: data.contactPhone || '',
-        })
+        // Only populate form with existing data if it hasn't been initialized yet
+        if (!formInitialized) {
+          reset({
+            company: data.company || '',
+            position: data.position || '',
+            location: data.location || '',
+            jobUrl: data.jobUrl || '',
+            salary: data.salary || '',
+            status: data.status || 'APPLIED',
+            jobType: data.jobType || '',
+            workLocation: data.workLocation || '',
+            priority: data.priority || 'MEDIUM',
+            appliedDate: data.appliedDate ? data.appliedDate.split('T')[0] : '',
+            deadline: data.deadline ? data.deadline.split('T')[0] : '',
+            description: data.description || '',
+            requirements: data.requirements || '',
+            notes: data.notes || '',
+            contactName: data.contactName || '',
+            contactEmail: data.contactEmail || '',
+            contactPhone: data.contactPhone || '',
+          })
+          setFormInitialized(true)
+        }
       } else if (response.status === 404) {
         setFetchError('Application not found')
       } else {
