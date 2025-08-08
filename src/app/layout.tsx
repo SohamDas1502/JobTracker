@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "JobTracker - Track Your Job Applications",
+  title: "JobStash - Track Your Job Applications",
   description: "Keep track of your job applications and internship opportunities",
 };
 

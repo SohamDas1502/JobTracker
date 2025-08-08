@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { signIn, getSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 import PasswordResetModal from '@/components/modals/PasswordResetModal'
@@ -13,10 +13,19 @@ export default function SignInPage() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { isDark } = useTheme()
+
+  useEffect(() => {
+    const message = searchParams.get('message')
+    if (message) {
+      setSuccessMessage(decodeURIComponent(message))
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -70,7 +79,7 @@ export default function SignInPage() {
           <h2 className={`mt-6 text-center text-3xl font-extrabold ${
             isDark ? 'text-white' : 'text-gray-900'
           }`}>
-            Sign in to JobTracker
+            Sign in to JobStash
           </h2>
           <p className={`mt-2 text-center text-sm ${
             isDark ? 'text-gray-400' : 'text-gray-600'
@@ -138,6 +147,10 @@ export default function SignInPage() {
               </button>
             </div>
           </div>
+
+          {successMessage && (
+            <div className="text-green-600 text-sm text-center">{successMessage}</div>
+          )}
 
           {error && (
             <div className="text-red-600 text-sm text-center">{error}</div>

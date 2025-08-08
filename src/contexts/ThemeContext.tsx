@@ -25,13 +25,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // Initialize theme immediately on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('jobtracker-theme') as Theme
+      const savedTheme = localStorage.getItem('jobstash-theme') as Theme
       if (savedTheme && ['light', 'dark'].includes(savedTheme)) {
         setTheme(savedTheme)
       } else {
         // If no valid theme or invalid theme, default to light
         setTheme('light')
-        localStorage.setItem('jobtracker-theme', 'light')
+        localStorage.setItem('jobstash-theme', 'light')
       }
       
       // Apply initial theme to avoid flash
@@ -50,7 +50,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       // Save theme to localStorage whenever it changes
-      localStorage.setItem('jobtracker-theme', theme)
+      localStorage.setItem('jobstash-theme', theme)
 
       // Set resolved theme (now it's always the same as theme)
       setResolvedTheme(theme)

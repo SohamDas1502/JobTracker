@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import DashboardLayout from '@/components/layout/DashboardLayout'
 import PasswordResetModal from '@/components/modals/PasswordResetModal'
+import DeleteAccountModal from '@/components/modals/DeleteAccountModal'
 import { useUser } from '@/contexts/UserContext'
 import { useTheme } from '@/contexts/ThemeContext'
 import { UserCircleIcon, PencilIcon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -47,6 +48,7 @@ export default function ProfilePage() {
   const [error, setError] = useState('')
   const [showExportModal, setShowExportModal] = useState(false)
   const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
+  const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false)
   const [applications, setApplications] = useState<JobApplication[]>([])
   const [selectedApplications, setSelectedApplications] = useState<Set<string>>(new Set())
   const [loadingApplications, setLoadingApplications] = useState(false)
@@ -381,11 +383,14 @@ export default function ProfilePage() {
                   <h3 className={`text-sm font-medium ${isDark ? 'text-red-400' : 'text-red-900'}`}>Delete Account</h3>
                   <p className={`text-sm ${isDark ? 'text-red-400' : 'text-red-500'}`}>Permanently delete your account and all data</p>
                 </div>
-                <button className={`px-4 py-2 border rounded-md text-sm font-medium hover:opacity-90 ${
-                  isDark 
-                    ? 'border-red-600 text-red-400 bg-gray-700 hover:bg-red-900/20' 
-                    : 'border-red-300 text-red-700 bg-white hover:bg-red-50'
-                }`}>
+                <button 
+                  onClick={() => setShowDeleteAccountModal(true)}
+                  className={`px-4 py-2 border rounded-md text-sm font-medium hover:opacity-90 ${
+                    isDark 
+                      ? 'border-red-600 text-red-400 bg-gray-700 hover:bg-red-900/20' 
+                      : 'border-red-300 text-red-700 bg-white hover:bg-red-50'
+                  }`}
+                >
                   Delete
                 </button>
               </div>
@@ -567,6 +572,13 @@ export default function ProfilePage() {
       <PasswordResetModal 
         isOpen={showPasswordResetModal}
         onClose={() => setShowPasswordResetModal(false)}
+        userEmail={session?.user?.email || ''}
+      />
+
+      {/* Delete Account Modal */}
+      <DeleteAccountModal 
+        isOpen={showDeleteAccountModal}
+        onClose={() => setShowDeleteAccountModal(false)}
         userEmail={session?.user?.email || ''}
       />
     </DashboardLayout>

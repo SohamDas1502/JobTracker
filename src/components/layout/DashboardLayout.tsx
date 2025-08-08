@@ -102,7 +102,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 >
                   <Bars3Icon className="h-6 w-6" />
                 </button>
-                <h1 className={`ml-4 text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>JobTracker</h1>
+                <h1 className={`ml-4 text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>JobStash</h1>
               </div>
               <div className="flex items-center space-x-4">
                 <Link 
@@ -165,7 +165,7 @@ function SidebarContent({
   return (
     <div className={`flex flex-col flex-grow border-r ${sidebarBgClasses} pt-5 pb-4 overflow-y-auto`}>
       <div className="flex items-center flex-shrink-0 px-4">
-        <h1 className={`text-xl font-bold ${titleClasses}`}>JobTracker</h1>
+        <h1 className={`text-xl font-bold ${titleClasses}`}>JobStash</h1>
       </div>
       <div className="mt-5 flex-grow flex flex-col">
         <nav className="flex-1 px-2 space-y-1">

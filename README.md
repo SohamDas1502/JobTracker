@@ -1,12 +1,10 @@
-# JobTracker - Your Personal Job Application Manager
+# JobStash - Your Personal Job Application Manager
 
-> A modern, full-stack web application to streamline you## Installation & Setup
+> A modern, full-stack web application to streamline your job search journey. Track applications, manage deadlines, analyze your progress, and never miss a follow-up again.
 
-1. **Clone the repository**ob search journey. Track applications, manage deadlines, analyze your progress, and never miss a follow-up again.
+## Why JobStash?
 
-## Why JobTracker?
-
-Job hunting can be overwhelming. Between multiple applications, different stages, follow-up reminders, and keeping track of deadlines, it's easy to lose control. **JobTracker** solves this by providing a centralized, intuitive platform to manage your entire job search process.
+Job hunting can be overwhelming. Between multiple applications, different stages, follow-up reminders, and keeping track of deadlines, it's easy to lose control. **JobStash** solves this by providing a centralized, intuitive platform to manage your entire job search process.
 
 ## Key Features
 
@@ -63,7 +61,7 @@ Job hunting can be overwhelming. Between multiple applications, different stages
 
 ## User Experience
 
-JobTracker is designed with simplicity and efficiency in mind:
+JobStash is designed with simplicity and efficiency in mind:
 
 - **Intuitive Navigation**: Clean sidebar with clear sections
 - **Smart Forms**: Auto-filled defaults based on your preferences
@@ -114,8 +112,8 @@ Manage your account:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/SohamDas1502/JobTracker.git
-   cd JobTracker
+   git clone https://github.com/SohamDas1502/JobStash.git
+   cd JobStash
    ```
 
 2. **Install dependencies**
